@@ -30,7 +30,7 @@ module Reactivity
     end
 
     def subscription_objects
-      scope = collection_klass
+      scope = collection_klass.unscoped
 
       conditions.each do |key, condition|
         group = condition.first
@@ -52,7 +52,7 @@ module Reactivity
     def validate_conditions
       conditions.each do |key, condition|
         unless collection_klass.attribute_names.include?(key)
-          error.add(:conditions, "Invalid key '#{key}' for collection '#{collection_klass}'")
+          errors.add(:conditions, "Invalid key '#{key}' for collection '#{collection_klass}'")
         end
 
         element = condition.first
@@ -60,11 +60,11 @@ module Reactivity
         value = element[1]
 
         unless value.present?
-          error.add(:conditions, "Invalid value '#{value}' for key '#{key}' for collection '#{collection_klass}'")
+          errors.add(:conditions, "Invalid value '#{value}' for key '#{key}' for collection '#{collection_klass}'")
         end
 
         unless operator
-          error.add(:conditions, "Invalid operator '#{operator}' for key '#{key}' for collection '#{collection_klass}'")
+          errors.add(:conditions, "Invalid operator '#{operator}' for key '#{key}' for collection '#{collection_klass}'")
         end
       end
     end
