@@ -84,6 +84,12 @@ reactivity = new Reactivity( function () {
 });
 ```
 
+Cable.yml
+
+Would need some investigation but it seems to be an incompatibility with the `async` adapter integration.
+The `redis` one works as expected.
+
+
 ## Roadmap
 
 See `ROADMAP.md`
